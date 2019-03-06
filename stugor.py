@@ -9,7 +9,7 @@ import time
 base_url = 'https://www.stugknuten.com'
 
 def get_url(page):
-    url = 'https://www.stugknuten.com/resultatnysokning.asp?page='
+    url = 'https://www.stugknuten.com/resultatnysokning.asp?ort=%C3%B6land&page='
     return url + str(page)
 
 def get_soup(url):
@@ -21,17 +21,39 @@ def get_soup(url):
 
 def parse_soup(soup):
     result = []
-    """
-    <a href="/stuga.asp?stugid=22317" class="Listing-title">
-    					Hus uthyres i Stenungsunds kommun
-    				</a>
-    """
-    anchor_tags = soup.find_all('a', class_='Listing-title')
-    for anchor_tag in anchor_tags:
-        href = anchor_tag.get('href')
+    elements = soup.find_all('article', class_='CottageCard')
+
+    for element in elements:
+        image_url = get_image_url(element)
+
+        listing_title = element.find('a', class_='Listing-title')
+        title = listing_title.string.strip()
+        href = listing_title.get('href')
+        print(title)
         print(href)
-        result.append(href)
-    return(result)
+
+        location = element.find('h3', class_='CottageLocation').string.strip()
+        print(location)
+        cottage = {
+            'title': title,
+            'location': location,
+            'href': href,
+            'image_url': image_url
+        }
+
+        result.append(cottage)
+        break
+    return result
+
+def get_image_url(element):
+    image_div = element.find('div', class_='CottageCard-image-img')
+    print(image_div)
+    style = image_div.get('style')
+    print(style)
+    image_url = style.replace('background-image: url(', '')[:-2]
+    print(image_url)
+    return base_url + image_url
+
 
 def get_links():
     links = []
@@ -40,9 +62,10 @@ def get_links():
         page_soup = get_soup(page_url)
         page_links = parse_soup(page_soup)
         links.extend(page_links)
+        break
     return links
 
 ###############################################################################
 
 urls = get_links()
-pickler.save('urls.pickle', urls)
+# pickler.save('urls.pickle', urls)
