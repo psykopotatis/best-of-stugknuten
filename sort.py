@@ -3,9 +3,9 @@ import pprint
 import json
 
 
-urls = pickler.load('result.pickle', [])
+urls = pickler.load('likes_oland.pickle', [])
 # {'engagement': {u'comment_count': 0, u'comment_plugin_count': 0, u'share_count': 0, u'reaction_count': 0}
-sorted_urls = sorted(urls, key=lambda x: x.get('engagement').get('reaction_count'))
+sorted_urls = sorted(urls, key=lambda x: x.get('engagement').get('reaction_count'), reverse=True)
 
 
 def pretty_print():
@@ -14,9 +14,9 @@ def pretty_print():
         pp.pprint(sorted_url)
 
 def to_json():
-    with open('result.json', 'w') as outfile:
+    with open('likes_oland.json', 'w') as outfile:
         print('dumping ....')
-        json.dump(sorted_urls, outfile)
+        json.dump(sorted_urls, outfile, indent=4, sort_keys=True)
         print('done')
 
 to_json()

@@ -3,34 +3,39 @@ import requests
 import json
 import time
 
-FIVE_SECONDS = 4
+FIVE_SECONDS = 5
 
 def get_engagement(url):
-    access_token = 'EAAES1ZCsXZCGABABjEGM1ZCqnBZAWp0yxJRj7MIxmUVSeOFcLdpjfi8K5UzqFiMfYwvGqnLAG1lDk6oZB7NuzWJWRuZBRx3qHldmVZBT0Uuz5XfMpRINoP1e7dHbZAVk2Px0Is6yhbevsuEt1viZBack6G0wLf19R5u3wj6RllYZBCZAgYxeCmcPK0tXi14dws1S4oZD'
+    access_token = 'EAAES1ZCsXZCGABAAoEqO2IUvBoMIZC7Oiu2eRQ0elydYtufncY8cKCqNtKuq04H01yVKanfZBvrpkZBOix4ZB8x0YDtDENKZCXNTdTBq2GghDBFGhpuI75QcMU3OPvagrFRDA033JzKDYT1SGvejDMZANKV91UJOMhiuw2o7KZBcvGUZAnGw6eASENEXZBgzkZCLgCgZD'
     graph_url = 'https://graph.facebook.com/v3.2/?fields=engagement&access_token=' + access_token + '&id=' + url
     print(graph_url)
     r = requests.get(graph_url)
+    print(r.status_code)
     print(r.json())
-    result = json.loads(r.text)
-    engagement = result.get('engagement')
-    # {'engagement': {u'comment_count': 0, u'comment_plugin_count': 0, u'share_count': 0, u'reaction_count': 0}
-    print(engagement)
-    return engagement
+    if r.status_code == 200:
+        result_json = json.loads(r.text)
+        engagement_json = result_json.get('engagement')
+        # {'engagement': {u'comment_count': 0, u'comment_plugin_count': 0, u'share_count': 0, u'reaction_count': 0}
+        print(engagement_json)
+        return engagement_json
+    else:
+        return None
 
 
 base_url = 'https://www.stugknuten.com'
 
-urls = pickler.load('urls.pickle', [])
+cottages = pickler.load('stugor_oland.pickle', [])
 result = []
-for url in urls:
-    full_url = base_url + url
-    engagement = get_engagement(full_url)
-    obj = {
-        'url': full_url,
-        'engagement': engagement
-    }
-    print(obj)
-    result.append(obj)
-    time.sleep(FIVE_SECONDS)
+for cottage in cottages:
+    cottage_href = cottage.get('href')
+    engagement = get_engagement(cottage_href)
+    if engagement:
+        cottage['engagement'] = engagement
+        print(cottage)
+        result.append(cottage)
+        time.sleep(FIVE_SECONDS)
+    else:
+        print('NO ENGAGEMENT! ERROR! ABORT ABORT!')
+        break
 
-pickler.save('result.pickle', result)
+pickler.save('likes_oland.pickle', result)

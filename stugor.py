@@ -34,7 +34,7 @@ def parse_soup(soup):
         cottage = {
             'title': title,
             'location': location,
-            'href': href,
+            'href': base_url + href,
             'image_url': image_url
         }
 
