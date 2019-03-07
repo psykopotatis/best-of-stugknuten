@@ -1,9 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import pickler
-import json
-import time
-
 
 
 base_url = 'https://www.stugknuten.com'
@@ -42,7 +39,7 @@ def parse_soup(soup):
         }
 
         result.append(cottage)
-        break
+
     return result
 
 def get_image_url(element):
@@ -57,15 +54,14 @@ def get_image_url(element):
 
 def get_links():
     links = []
-    for page_number in range(1, 435):
+    for page_number in range(1, 16):
         page_url = get_url(page_number)
         page_soup = get_soup(page_url)
         page_links = parse_soup(page_soup)
         links.extend(page_links)
-        break
     return links
 
 ###############################################################################
 
 urls = get_links()
-# pickler.save('urls.pickle', urls)
+pickler.save('stugor_oland.pickle', urls)
