@@ -64,5 +64,19 @@ def get_links():
 
 ###############################################################################
 
-urls = get_links()
-pickler.save('stugor_vastkusten.pickle', urls)
+cottages = get_links()
+
+print(len(cottages))
+
+# Remove duplicates
+seen = set()
+sorted_cottages = []
+for cottage in cottages:
+    unique_key = cottage.get('title')
+    if unique_key not in seen:
+        seen.add(unique_key)
+        sorted_cottages.append(cottage)
+
+print len(sorted_cottages)
+
+pickler.save('stugor_vastkusten.pickle', sorted_cottages)
