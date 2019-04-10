@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {Link} from "gatsby"
-
 import Layout from "../../components/layout"
 import Image from "../../components/image"
+import Cottage from './../../components/Cottage';
+
 
 export default class IndexPage extends Component {
     constructor(props) {
@@ -15,10 +15,7 @@ export default class IndexPage extends Component {
 
     renderItem(item) {
         return (
-            <div key={item.node.id}>
-                reaction_count: {item.node.engagement.reaction_count} --
-                <a href={item.node.url} target="_blank">{item.node.url}</a>
-            </div>
+            <Cottage item={item} />
         );
     }
 
