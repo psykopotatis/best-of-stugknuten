@@ -6,7 +6,8 @@ import pickler
 base_url = 'https://www.stugknuten.com'
 
 def get_url(page):
-    url = 'https://www.stugknuten.com/resultatnysokning.asp?ort=%C3%B6land&page='
+    # url = 'https://www.stugknuten.com/resultatnysokning.asp?ort=%C3%B6land&page='
+    url = 'https://www.stugknuten.com/vastkusten.htm?page='
     return url + str(page)
 
 def get_soup(url):
@@ -64,4 +65,4 @@ def get_links():
 ###############################################################################
 
 urls = get_links()
-pickler.save('stugor_oland.pickle', urls)
+pickler.save('stugor_vastkusten.pickle', urls)

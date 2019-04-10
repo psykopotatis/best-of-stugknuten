@@ -20,6 +20,7 @@ export default class IndexPage extends Component {
                 <ul>
                     <li><Link to="/stugor/goteborg">Göteborg</Link></li>
                     <li><Link to="/stugor/oland">Öland</Link></li>
+                    <li><Link to="/stugor/vastkusten">Västkusten</Link></li>
                 </ul>
                 <div style={{maxWidth: `300px`, marginBottom: `1.45rem`}}>
                     <Image/>

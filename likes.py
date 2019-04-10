@@ -6,7 +6,7 @@ import time
 FIVE_SECONDS = 5
 
 def get_engagement(url):
-    access_token = 'EAAES1ZCsXZCGABAAoEqO2IUvBoMIZC7Oiu2eRQ0elydYtufncY8cKCqNtKuq04H01yVKanfZBvrpkZBOix4ZB8x0YDtDENKZCXNTdTBq2GghDBFGhpuI75QcMU3OPvagrFRDA033JzKDYT1SGvejDMZANKV91UJOMhiuw2o7KZBcvGUZAnGw6eASENEXZBgzkZCLgCgZD'
+    access_token = 'EAACuFURl7OgBAFr1hs7fOZCUu7Eq0TQ1s1clSoJtMyfHZBv4UtzyXZAxxs5SC2DA10Q83wrgFeJKr61QNQDVS5CYcpKZBZAHrIjDLZAiSwu363xJuZAbEGRxjO9wOQdRCMyrQHEGHEARTZCjO2ar5lw1ZCz8bHRJRjiP27aaJzEHb8WwHGbOrbAnLfAZBYlzCh7mgZD'
     graph_url = 'https://graph.facebook.com/v3.2/?fields=engagement&access_token=' + access_token + '&id=' + url
     print(graph_url)
     r = requests.get(graph_url)
@@ -24,7 +24,7 @@ def get_engagement(url):
 
 base_url = 'https://www.stugknuten.com'
 
-cottages = pickler.load('stugor_oland.pickle', [])
+cottages = pickler.load('stugor_vastkusten.pickle', [])
 result = []
 for cottage in cottages:
     cottage_href = cottage.get('href')
@@ -38,4 +38,4 @@ for cottage in cottages:
         print('NO ENGAGEMENT! ERROR! ABORT ABORT!')
         break
 
-pickler.save('likes_oland.pickle', result)
+pickler.save('likes_vastkusten.pickle', result)
